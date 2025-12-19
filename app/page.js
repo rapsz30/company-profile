@@ -7,162 +7,103 @@ import * as motion from "motion/react-client";
 export default function Home() {
   return (
     <>
-      <motion.div className="py-20" initial={{opacity:0, y:50, scale:0.8}} animate={{opacity:1, y:0, scale:1}} transition={{duration:1}}>
-        <h1 className="sm:text-6xl/tight text-5xl/tight sm:text-center text-left">
-          Tingkatkan Gaya Hidup Anda <br /> Bersama Kami
-        </h1>
-      </motion.div>
-
-      <div className="max-w-5xl mx-auto relative" >
-        <motion.div initial={{opacity:0, y:50}} animate={{opacity:1, y:0}} transition={{delay:0.5}}>
-        <Image src={DataImage.Hero} alt="Hero Image" priority />
-        </motion.div>
-        <HeroInfo />
-      </div>
-
-      <div className="grid lg:grid-cols-3 mt-32 gap-10 md:grid-cols-2 grid-cols-1" id="layanan">
-        <motion.div className="shadow-2xl p-7 rounded-2xl" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-          <i className="ri-money-dollar-circle-fill ri-3x text-slate-700"></i>
-          <p className="font-semibold text-2xl/normal mb-2">
-            Memberikan Harga Terbaik
+      <section id="home" className="min-h-[80vh] flex flex-col justify-center items-center pt-10">
+        <motion.div 
+          className="py-10 text-center" 
+          initial={{opacity:0, y:50, scale:0.8}} 
+          animate={{opacity:1, y:0, scale:1}} 
+          transition={{duration:1}}
+        >
+          <h1 className="sm:text-7xl text-5xl font-bold mb-6 bg-slate-800 bg-clip-text text-transparent">
+            Cognifera Publishing
+          </h1>
+          <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">
+            Digital manuscript publishing system, upload your work, monitor the process, and publish.
           </p>
-          <p className="text-base/loose">Loremmmmmmmmmmmmmmmmmmmmmm</p>
+          <Link 
+            href="/auth/login" 
+            className="bg-slate-800 text-white px-10 py-4 rounded-full font-bold hover:bg-slate-700 transition-all shadow-lg hover:shadow-xl"
+          >
+            Start Publishing
+          </Link>
         </motion.div>
-        <motion.div className="shadow-2xl p-7 rounded-2xl" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-          <i className="ri-service-fill ri-3x text-slate-700"></i>
-          <p className="font-semibold text-2xl/normal mb-2">
-            Pemeriksaan Secara Berkala
-          </p>
-          <p className="text-base/loose">
-            Loremmmmmmmmmmmmmmmmmmm akpsakdsadaspd
-          </p>
-        </motion.div>
-        <motion.div className="shadow-2xl p-7 rounded-2xl"initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-          <i className="ri-star-s-fill ri-3x text-slate-700"></i>
-          <p className="font-semibold text-2xl/normal mb-2">
-            Fokus pada Website, Mobile, & IoT
-          </p>
-          <p className="text-base/loose">Loremmmmmmmmmmmmmmmmmmmm</p>
-        </motion.div>
-      </div>
 
-      <div className="mt-32" id="proyek">
-        <motion.h1 className="text-4xl/normal text-center font-semibold" initial={{opacity:0, y:50}} whileInView={{opacity:1, y:0}}>
-          Proyek Kami
-        </motion.h1>
-        <motion.p className="text-base/loose text-center" initial={{opacity:0, y:50}} whileInView={{opacity:1, y:0}} transition={{delay:0.2}}>sbdiada</motion.p>
-
-        <div className="mt-20 grid lg:grid-cols-3 gap-10 md:grid-cols-2 grid-cols-1">
-          <motion.div className="shadow-2xl p-4 rounded-2xl" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-            <Image
-              src={DataImage.Proyek1}
-              alt="Proyek Image"
-              className="rounded-tl-2xl rounded-tr-2xl"
+        <div className="max-w-5xl mx-auto relative mt-10 w-full">
+          <motion.div initial={{opacity:0, y:50}} animate={{opacity:1, y:0}} transition={{delay:0.5}}>
+            <Image 
+              src={DataImage.Hero} 
+              alt="Cognifera Hero" 
+              className="rounded-3xl shadow-2xl object-cover h-[450px] w-full"
+              priority 
             />
-            <h1 className="mt-6 mb-3 text-2xl font-semibold">Proyek Pertama</h1>
-            <p className="mt-6 mb-3">Lorem ipsum adkaeka</p>
-            <div className="mt-6 mb-3">
-              <Link
-                href={"#"}
-                className="bg-slate-700 text-white text-center p-3 rounded-xl hover:bg-slate-600 cursor-pointer"
-              >
-                Lihat Website
-              </Link>
-            </div>
           </motion.div>
-          <motion.div className="shadow-2xl p-4 rounded-2xl" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-            <Image
-              src={DataImage.Proyek2}
-              alt="Proyek Image"
-              className="rounded-tl-2xl rounded-tr-2xl"
+          <HeroInfo />
+        </div>
+      </section>
+
+      <section className="mt-48" id="services">
+        <motion.div 
+          initial={{opacity:0}} 
+          whileInView={{opacity:1}} 
+          className="text-center mb-16"
+        >
+          <h2 className="text-4xl font-bold mb-4 text-slate-800">Layanan Utama Kami</h2>
+          <div className="h-1.5 w-20 bg-slate-800 mx-auto rounded-full"></div>
+        </motion.div>
+
+        <div className="grid lg:grid-cols-3 gap-10 md:grid-cols-2 grid-cols-1">
+          <motion.div className="shadow-2xl p-8 rounded-3xl border border-slate-50 bg-white" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
+            <i className="ri-book-open-fill ri-3x text-slate-700 mb-4 block"></i>
+            <h3 className="font-bold text-2xl mb-3">Book Publishing</h3>
+            <p className="text-base leading-relaxed text-slate-600">
+              End-to-end services: Editing, Layout, ISBN, dan Penerbitan resmi.
+            </p>
+          </motion.div>
+
+          <motion.div className="shadow-2xl p-8 rounded-3xl border border-slate-50 bg-white" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:0.2}}>
+            <i className="ri-microscope-line ri-3x text-slate-700 mb-4 block"></i>
+            <h3 className="font-bold text-2xl mb-3">Research Consultant</h3>
+            <p className="text-base leading-relaxed text-slate-600">
+              Pendampingan metodologi penelitian dan publikasi ilmiah berkualitas.
+            </p>
+          </motion.div>
+
+          <motion.div className="shadow-2xl p-8 rounded-3xl border border-slate-50 bg-white" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}} transition={{delay:0.4}}>
+            <i className="ri-global-line ri-3x text-slate-700 mb-4 block"></i>
+            <h3 className="font-bold text-2xl mb-3">OJS Management</h3>
+            <p className="text-base leading-relaxed text-slate-600">
+              Pengelolaan sistem jurnal ilmiah digital yang terintegrasi.
+            </p>
+          </motion.div>
+        </div>
+      </section>
+
+      <section className="mt-48 mb-20 py-20 bg-slate-50 rounded-[3rem] px-8 md:px-16" id="about">
+        <div className="grid md:grid-cols-2 gap-16 items-center">
+          <motion.div initial={{opacity:0, x:-50}} whileInView={{opacity:1, x:0}} viewport={{once:true}}>
+            <Image 
+              src={DataImage.Proyek1} 
+              alt="About Cognifera" 
+              className="rounded-3xl shadow-xl border-4 border-white"
             />
-            <h1 className="mt-6 mb-3 text-2xl font-semibold">Proyek Pertama</h1>
-            <p className="mt-6 mb-3">Lorem ipsum adkaeka</p>
-            <div className="mt-6 mb-3">
-              <Link
-                href={"#"}
-                className="bg-slate-700 text-white text-center p-3 rounded-xl hover:bg-slate-600 cursor-pointer"
-              >
-                Lihat Website
-              </Link>
+          </motion.div>
+          <motion.div initial={{opacity:0, x:50}} whileInView={{opacity:1, x:0}} viewport={{once:true}}>
+            <h2 className="text-4xl font-bold mb-6 text-slate-800">Tentang Cognifera</h2>
+            <div className="space-y-4 text-slate-600 leading-relaxed text-lg">
+              <p>
+                Lahir dari pengalaman mengelola OJS dan resmi berdiri tahun 2024, <strong>PT Cognifera Education Academy</strong> hadir dengan visi membangun ekosistem digital terintegrasi bagi akademisi.
+              </p>
+              <p>
+                Dengan legalitas resmi dari <strong>Puspresnas</strong>, kami menyediakan platform aman untuk mengelola alur kerja naskah mulai dari draf hingga mendapatkan ISBN.
+              </p>
             </div>
-          </motion.div>{" "}
-          <motion.div className="shadow-2xl p-4 rounded-2xl" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-            <Image
-              src={DataImage.Proyek3}
-              alt="Proyek Image"
-              className="rounded-tl-2xl rounded-tr-2xl"
-            />
-            <h1 className="mt-6 mb-3 text-2xl font-semibold">Proyek Pertama</h1>
-            <p className="mt-6 mb-3">Lorem ipsum adkaeka</p>
-            <div className="mt-6 mb-3">
-              <Link
-                href={"#"}
-                className="bg-slate-700 text-white text-center p-3 rounded-xl hover:bg-slate-600 cursor-pointer"
-              >
-                Lihat Website
-              </Link>
-            </div>
-          </motion.div>{" "}
-          <motion.div className="shadow-2xl p-4 rounded-2xl" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-            <Image
-              src={DataImage.Proyek4}
-              alt="Proyek Image"
-              className="rounded-tl-2xl rounded-tr-2xl"
-            />
-            <h1 className="mt-6 mb-3 text-2xl font-semibold">Proyek Pertama</h1>
-            <p className="mt-6 mb-3">Lorem ipsum adkaeka</p>
-            <div className="mt-6 mb-3">
-              <Link
-                href={"#"}
-                className="bg-slate-700 text-white text-center p-3 rounded-xl hover:bg-slate-600 cursor-pointer"
-              >
-                Lihat Website
-              </Link>
-            </div>
-          </motion.div>{" "}
-          <motion.div className="shadow-2xl p-4 rounded-2xl" initial={{opacity:0, y:100}} whileInView={{opacity:1, y:0}} viewport={{once:true}}>
-            <Image
-              src={DataImage.Proyek5}
-              alt="Proyek Image"
-              className="rounded-tl-2xl rounded-tr-2xl"
-            />
-            <h1 className="mt-6 mb-3 text-2xl font-semibold">Proyek Pertama</h1>
-            <p className="mt-6 mb-3">Lorem ipsum adkaeka</p>
-            <div className="mt-6 mb-3">
-              <Link
-                href={"#"}
-                className="bg-slate-700 text-white text-center p-3 rounded-xl hover:bg-slate-600 cursor-pointer"
-              >
-                Lihat Website
-              </Link>
+            <div className="mt-8 p-5 bg-white rounded-2xl inline-flex items-center gap-4 shadow-sm border border-slate-200">
+              <i className="ri-shield-check-fill text-green-600 ri-2x"></i>
+              <span className="font-semibold text-slate-700 uppercase tracking-wider text-sm">Legalisasi Puspresnas Terverifikasi</span>
             </div>
           </motion.div>
         </div>
-      </div>
-
-      <div className="mt-32 flex items-center justify-between md:flex-row flex-col md:gap-0 gap-4" id="kontak">
-        <h2 className="text-3xl font-bold">Ngoding.</h2>
-        <div className="flex gap-10">
-          <Link href={"#beranda"}>Beranda</Link>
-          <Link href={"#layanan"}>Layanan</Link>
-          <Link href={"#proyek"}>Proyek</Link>
-        </div>
-        <div className="flex gap-4">
-          <Link href={""}>
-            <i className="ri-youtube-fill ri-2x"></i>
-          </Link>
-          <Link href={""}>
-            <i className="ri-instagram-fill ri-2x"></i>
-          </Link>
-          <Link href={""}>
-            <i className="ri-reddit-fill ri-2x"></i>
-          </Link>
-          <Link href={""}>
-            <i className="ri-twitter-fill ri-2x"></i>
-          </Link>
-        </div>
-      </div>
+      </section>
     </>
   );
 }
