@@ -14,7 +14,7 @@ export default function Home() {
           animate={{opacity:1, y:0, scale:1}} 
           transition={{duration:1}}
         >
-          <h1 className="sm:text-7xl text-5xl font-bold mb-6 bg-slate-800 bg-clip-text text-transparent">
+          <h1 className="sm:text-7xl text-5xl font-bold mb-12 bg-slate-800 bg-clip-text text-transparent">
             Cognifera Publishing
           </h1>
           <p className="text-xl text-slate-600 max-w-2xl mx-auto mb-10 leading-relaxed">

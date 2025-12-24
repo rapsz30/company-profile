@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { initialBooks } from "@/lib/data";
+import { deleteBookAction } from "@/lib/actions"; // Import your new action
 
 export default function MemberPage() {
   const [books, setBooks] = useState(initialBooks);
@@ -11,16 +12,24 @@ export default function MemberPage() {
     e.preventDefault();
 
     const newBook = {
-      id: books.length + 1,
+      // FIX: Use Date.now() to ensure a unique ID regardless of array length
+      id: Date.now(),
       title: title,
       author: "Me (Member)",
       status: "Pending",
     };
 
     setBooks([...books, newBook]);
-
     setTitle("");
     alert("Book uploaded successfully!");
+  };
+
+  const handleDelete = async (id) => {
+    // Step B: Call the Server Action
+    await deleteBookAction(id);
+    
+    // Update local state so the item disappears from the UI
+    setBooks(books.filter((book) => book.id !== id));
   };
 
   return (
@@ -67,6 +76,7 @@ export default function MemberPage() {
               <tr className="bg-orange-50 text-gray-700">
                 <th className="p-3">Title</th>
                 <th className="p-3">Status</th>
+                <th className="p-3 text-center">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -89,6 +99,15 @@ export default function MemberPage() {
                     >
                       {book.status}
                     </span>
+                  </td>
+                  <td className="p-3 text-center">
+                    {/* Requirement: Delete (x) button calling the action */}
+                    <button
+                      onClick={() => handleDelete(book.id)}
+                      className="text-red-500 hover:text-red-700 font-bold px-2"
+                    >
+                      (x)
+                    </button>
                   </td>
                 </tr>
               ))}
