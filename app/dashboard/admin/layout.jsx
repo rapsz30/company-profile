@@ -1,17 +1,21 @@
 import prisma from "@/lib/prisma"
 import AdminPage from "./page"
 
-export default async function AdminLayout() {
+async function getBooks() {
   try {
-    const books = await prisma.book.findMany({
+    return await prisma.book.findMany({
       orderBy: {
         createdAt: "desc",
       },
     })
-
-    return <AdminPage books={books} />
   } catch (error) {
     console.error("Error fetching books:", error)
-    return <AdminPage books={[]} />
+    return []
   }
+}
+
+export default async function AdminLayout() {
+  const books = await getBooks()
+
+  return <AdminPage books={books} />
 }
