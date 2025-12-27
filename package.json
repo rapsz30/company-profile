@@ -14,7 +14,7 @@
     "dotenv": "^17.2.3",
     "lucide-react": "latest",
     "motion": "^12.23.26",
-    "next": "15.1.6",
+    "next": "15.1.7",
     "prisma": "^5.22.0",
     "react": "19.0.0",
     "react-dom": "19.0.0",
@@ -23,8 +23,8 @@
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
-    "eslint": "latest",
-    "eslint-config-next": "15.1.6",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "15.1.7",
     "tailwindcss": "^4"
   }
 }
