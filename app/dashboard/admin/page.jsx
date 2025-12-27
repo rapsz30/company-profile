@@ -69,6 +69,7 @@ export default function AdminPage({ books = [] }) {
             </div>
             <form onSubmit={handleCreate} className="p-4 space-y-3">
               <input
+                name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Judul buku"
@@ -76,6 +77,7 @@ export default function AdminPage({ books = [] }) {
                 required
               />
               <input
+                name="author"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 placeholder="Nama penulis"
@@ -109,15 +111,11 @@ export default function AdminPage({ books = [] }) {
                       <p className="text-sm text-slate-500">{book.author}</p>
                     </div>
                     <div className="flex items-center gap-2">
-                      {book.status === "Published" ? (
-                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
-                          Published
-                        </span>
-                      ) : (
-                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
-                          Pending
-                        </span>
-                      )}
+                      <span className={`px-2 py-1 rounded-full text-xs font-medium ${
+                        book.status === "Published" ? "bg-green-100 text-green-700" : "bg-amber-100 text-amber-700"
+                      }`}>
+                        {book.status}
+                      </span>
                       {book.status === "Pending" && (
                         <button
                           onClick={() => acceptBookAction(book.id)}
