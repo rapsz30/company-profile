@@ -1,16 +1,17 @@
-import { defineConfig, globalIgnores } from "eslint/config";
-import nextVitals from "eslint-config-next/core-web-vitals";
+import { FlatCompat } from "@eslint/eslintrc";
 
-const eslintConfig = defineConfig([
-  ...nextVitals,
-  // Override default ignores of eslint-config-next.
-  globalIgnores([
-    // Default ignores of eslint-config-next:
-    ".next/**",
-    "out/**",
-    "build/**",
-    "next-env.d.ts",
-  ]),
-]);
+const compat = new FlatCompat({
+  baseDirectory: import.meta.dirname,
+});
+
+const eslintConfig = [
+  ...compat.extends("next/core-web-vitals"),
+  {
+    rules: {
+      "react-hooks/exhaustive-deps": "off",
+      "@next/next/no-img-element": "off",
+    },
+  },
+];
 
 export default eslintConfig;

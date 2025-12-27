@@ -1,6 +1,7 @@
+export const dynamic = "force-dynamic";
+
 "use client"
 
-export const dynamic = "force-dynamic";
 import { useState } from "react"
 import Link from "next/link"
 import { LogOut, Inbox, Check, Trash2 } from "lucide-react"
@@ -70,7 +71,6 @@ export default function AdminPage({ books = [] }) {
             </div>
             <form onSubmit={handleCreate} className="p-4 space-y-3">
               <input
-                name="title"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="Judul buku"
@@ -78,7 +78,6 @@ export default function AdminPage({ books = [] }) {
                 required
               />
               <input
-                name="author"
                 value={author}
                 onChange={(e) => setAuthor(e.target.value)}
                 placeholder="Nama penulis"
