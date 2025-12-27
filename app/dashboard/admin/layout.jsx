@@ -1,12 +1,12 @@
+export const dynamic = "force-dynamic";
+
 import prisma from "@/lib/prisma"
 import AdminPage from "./page"
 
 async function getBooks() {
   try {
     return await prisma.book.findMany({
-      orderBy: {
-        createdAt: "desc",
-      },
+      orderBy: { createdAt: "desc" },
     })
   } catch (error) {
     console.error("Error fetching books:", error)
@@ -16,6 +16,5 @@ async function getBooks() {
 
 export default async function AdminLayout() {
   const books = await getBooks()
-
   return <AdminPage books={books} />
 }
