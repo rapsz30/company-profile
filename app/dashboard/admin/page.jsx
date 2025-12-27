@@ -3,15 +3,9 @@
 import { useState } from "react"
 import Link from "next/link"
 import { LogOut, Inbox, Check, Trash2 } from "lucide-react"
+import { createBookAction, acceptBookAction, deleteBookAction } from "@/lib/actions"
 
-const initialBooks = [
-  { id: 1, title: "Metodologi Penelitian Kualitatif", author: "Dr. Ahmad", status: "Published" },
-  { id: 2, title: "Statistika untuk Pemula", author: "Prof. Budi", status: "Pending" },
-  { id: 3, title: "Machine Learning Dasar", author: "Ir. Citra", status: "Published" },
-]
-
-export default function AdminPage() {
-  const [books, setBooks] = useState(initialBooks)
+export default function AdminPage({ books = [] }) {
   const [title, setTitle] = useState("")
   const [author, setAuthor] = useState("")
 
@@ -19,26 +13,21 @@ export default function AdminPage() {
   const publishedCount = books.filter((b) => b.status === "Published").length
   const pendingCount = books.filter((b) => b.status === "Pending").length
 
-  const handleCreate = (e) => {
+  const handleCreate = async (e) => {
     e.preventDefault()
     if (!title || !author) return
-    const newBook = { id: Date.now(), title, author, status: "Pending" }
-    setBooks([newBook, ...books])
+    
+    const formData = new FormData()
+    formData.append("title", title)
+    formData.append("author", author)
+
+    await createBookAction(formData)
     setTitle("")
     setAuthor("")
   }
 
-  const handleAccept = (id) => {
-    setBooks(books.map((b) => (b.id === id ? { ...b, status: "Published" } : b)))
-  }
-
-  const handleDelete = (id) => {
-    setBooks(books.filter((b) => b.id !== id))
-  }
-
   return (
     <div className="min-h-screen bg-slate-50">
-      {/* Header */}
       <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-3">
@@ -58,7 +47,6 @@ export default function AdminPage() {
       </header>
 
       <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
-        {/* Stats */}
         <div className="grid grid-cols-3 gap-4 mb-6">
           <div className="bg-white rounded-xl p-4 border border-slate-100">
             <p className="text-xs text-slate-500 mb-1">Total</p>
@@ -75,7 +63,6 @@ export default function AdminPage() {
         </div>
 
         <div className="grid lg:grid-cols-3 gap-6">
-          {/* Add Form */}
           <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
             <div className="p-4 border-b border-slate-100">
               <h2 className="font-semibold text-slate-800">Tambah Buku</h2>
@@ -104,7 +91,6 @@ export default function AdminPage() {
             </form>
           </div>
 
-          {/* Book List */}
           <div className="lg:col-span-2 bg-white rounded-xl border border-slate-100 overflow-hidden">
             <div className="p-4 border-b border-slate-100">
               <h2 className="font-semibold text-slate-800">Daftar Buku</h2>
@@ -134,17 +120,15 @@ export default function AdminPage() {
                       )}
                       {book.status === "Pending" && (
                         <button
-                          onClick={() => handleAccept(book.id)}
+                          onClick={() => acceptBookAction(book.id)}
                           className="p-1.5 rounded-lg bg-green-500 text-white hover:bg-green-600 transition-colors"
-                          title="Accept"
                         >
                           <Check className="w-4 h-4" />
                         </button>
                       )}
                       <button
-                        onClick={() => handleDelete(book.id)}
+                        onClick={() => deleteBookAction(book.id)}
                         className="p-1.5 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"
-                        title="Hapus"
                       >
                         <Trash2 className="w-4 h-4" />
                       </button>

@@ -100,8 +100,8 @@ export default function LoginPage() {
           <div className="mt-5 pt-5 border-t border-slate-100">
             <p className="text-center text-xs text-slate-400 mb-2">Demo credentials</p>
             <div className="flex gap-2 justify-center flex-wrap">
-              <code className="px-2 py-1 bg-slate-50 rounded text-xs text-slate-600">admin@demo.com</code>
-              <code className="px-2 py-1 bg-slate-50 rounded text-xs text-slate-600">member@demo.com</code>
+              <p className="px-2 py-1 bg-slate-50 rounded text-xs text-slate-600">admin@demo.com</p>
+              <p className="px-2 py-1 bg-slate-50 rounded text-xs text-slate-600">member@demo.com</p>
             </div>
             <p className="text-center text-xs text-slate-400 mt-2">Password: 123</p>
           </div>
