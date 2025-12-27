@@ -1,125 +1,161 @@
-"use client";
+"use client"
 
-import { useState } from "react";
-import { initialBooks } from "@/lib/data";
-import { deleteBookAction } from "@/lib/actions"; // Import your new action
+import { useState } from "react"
+import Link from "next/link"
+import { LogOut, Inbox, Check, Trash2 } from "lucide-react"
 
-export default function MemberPage() {
-  const [books, setBooks] = useState(initialBooks);
-  const [title, setTitle] = useState("");
+const initialBooks = [
+  { id: 1, title: "Metodologi Penelitian Kualitatif", author: "Dr. Ahmad", status: "Published" },
+  { id: 2, title: "Statistika untuk Pemula", author: "Prof. Budi", status: "Pending" },
+  { id: 3, title: "Machine Learning Dasar", author: "Ir. Citra", status: "Published" },
+]
 
-  const handleUpload = (e) => {
-    e.preventDefault();
+export default function AdminPage() {
+  const [books, setBooks] = useState(initialBooks)
+  const [title, setTitle] = useState("")
+  const [author, setAuthor] = useState("")
 
-    const newBook = {
-      // FIX: Use Date.now() to ensure a unique ID regardless of array length
-      id: Date.now(),
-      title: title,
-      author: "Me (Member)",
-      status: "Pending",
-    };
+  const totalBooks = books.length
+  const publishedCount = books.filter((b) => b.status === "Published").length
+  const pendingCount = books.filter((b) => b.status === "Pending").length
 
-    setBooks([...books, newBook]);
-    setTitle("");
-    alert("Book uploaded successfully!");
-  };
+  const handleCreate = (e) => {
+    e.preventDefault()
+    if (!title || !author) return
+    const newBook = { id: Date.now(), title, author, status: "Pending" }
+    setBooks([newBook, ...books])
+    setTitle("")
+    setAuthor("")
+  }
 
-  const handleDelete = async (id) => {
-    // Step B: Call the Server Action
-    await deleteBookAction(id);
-    
-    // Update local state so the item disappears from the UI
-    setBooks(books.filter((book) => book.id !== id));
-  };
+  const handleAccept = (id) => {
+    setBooks(books.map((b) => (b.id === id ? { ...b, status: "Published" } : b)))
+  }
+
+  const handleDelete = (id) => {
+    setBooks(books.filter((b) => b.id !== id))
+  }
 
   return (
-    <div className="min-h-screen p-8 bg-slate-50">
-      <h1 className="text-3xl font-bold mb-8 text-gray-800">My Dashboard</h1>
-
-      <div className="grid md:grid-cols-3 gap-8">
-        <div className="bg-white p-6 rounded-lg shadow border border-orange-100 h-fit">
-          <h2 className="text-xl font-bold text-orange-600 mb-4">
-            Upload Book
-          </h2>
-
-          <form onSubmit={handleUpload} className="space-y-4">
+    <div className="min-h-screen bg-slate-50">
+      {/* Header */}
+      <header className="bg-white border-b border-slate-200 sticky top-0 z-10">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between">
+          <div className="flex items-center gap-3">
+            <Link href="/" className="w-9 h-9 bg-slate-800 rounded-lg flex items-center justify-center">
+              <span className="text-white font-bold">C</span>
+            </Link>
             <div>
-              <label className="block text-sm mb-1 text-gray-600">
-                Book Title
-              </label>
+              <h1 className="text-lg font-bold text-slate-800">Admin Dashboard</h1>
+              <p className="text-xs text-slate-500">Kelola buku dan publikasi</p>
+            </div>
+          </div>
+          <Link href="/" className="text-sm text-slate-500 hover:text-slate-800 flex items-center gap-1">
+            <LogOut className="w-4 h-4" />
+            Keluar
+          </Link>
+        </div>
+      </header>
+
+      <main className="max-w-6xl mx-auto px-4 sm:px-6 py-6">
+        {/* Stats */}
+        <div className="grid grid-cols-3 gap-4 mb-6">
+          <div className="bg-white rounded-xl p-4 border border-slate-100">
+            <p className="text-xs text-slate-500 mb-1">Total</p>
+            <p className="text-2xl font-bold text-slate-800">{totalBooks}</p>
+          </div>
+          <div className="bg-white rounded-xl p-4 border border-slate-100">
+            <p className="text-xs text-slate-500 mb-1">Published</p>
+            <p className="text-2xl font-bold text-green-600">{publishedCount}</p>
+          </div>
+          <div className="bg-white rounded-xl p-4 border border-slate-100">
+            <p className="text-xs text-slate-500 mb-1">Pending</p>
+            <p className="text-2xl font-bold text-amber-600">{pendingCount}</p>
+          </div>
+        </div>
+
+        <div className="grid lg:grid-cols-3 gap-6">
+          {/* Add Form */}
+          <div className="bg-white rounded-xl border border-slate-100 overflow-hidden">
+            <div className="p-4 border-b border-slate-100">
+              <h2 className="font-semibold text-slate-800">Tambah Buku</h2>
+            </div>
+            <form onSubmit={handleCreate} className="p-4 space-y-3">
               <input
-                type="text"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
-                className="w-full border p-2 rounded focus:outline-none focus:ring-1 focus:ring-orange-500"
-                placeholder="Enter title..."
+                placeholder="Judul buku"
+                className="w-full border border-slate-200 rounded-lg p-2.5 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent"
                 required
               />
+              <input
+                value={author}
+                onChange={(e) => setAuthor(e.target.value)}
+                placeholder="Nama penulis"
+                className="w-full border border-slate-200 rounded-lg p-2.5 text-sm bg-slate-50 focus:bg-white focus:outline-none focus:ring-2 focus:ring-slate-800 focus:border-transparent"
+                required
+              />
+              <button
+                type="submit"
+                className="w-full bg-slate-800 text-white p-2.5 rounded-lg text-sm font-medium hover:bg-slate-700 transition-colors"
+              >
+                Simpan
+              </button>
+            </form>
+          </div>
+
+          {/* Book List */}
+          <div className="lg:col-span-2 bg-white rounded-xl border border-slate-100 overflow-hidden">
+            <div className="p-4 border-b border-slate-100">
+              <h2 className="font-semibold text-slate-800">Daftar Buku</h2>
             </div>
-
-            <button
-              type="submit"
-              className="w-full bg-orange-600 text-white p-2 rounded font-semibold hover:bg-orange-700 transition"
-            >
-              Submit Manuscript
-            </button>
-          </form>
+            <div className="divide-y divide-slate-100">
+              {books.length === 0 ? (
+                <div className="p-8 text-center text-slate-400">
+                  <Inbox className="w-8 h-8 mx-auto mb-2" />
+                  <p className="text-sm">Belum ada buku</p>
+                </div>
+              ) : (
+                books.map((book) => (
+                  <div key={book.id} className="p-4 flex items-center justify-between gap-4">
+                    <div className="min-w-0 flex-1">
+                      <p className="font-medium text-slate-800 truncate">{book.title}</p>
+                      <p className="text-sm text-slate-500">{book.author}</p>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      {book.status === "Published" ? (
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-green-100 text-green-700">
+                          Published
+                        </span>
+                      ) : (
+                        <span className="px-2 py-1 rounded-full text-xs font-medium bg-amber-100 text-amber-700">
+                          Pending
+                        </span>
+                      )}
+                      {book.status === "Pending" && (
+                        <button
+                          onClick={() => handleAccept(book.id)}
+                          className="p-1.5 rounded-lg bg-green-500 text-white hover:bg-green-600 transition-colors"
+                          title="Accept"
+                        >
+                          <Check className="w-4 h-4" />
+                        </button>
+                      )}
+                      <button
+                        onClick={() => handleDelete(book.id)}
+                        className="p-1.5 rounded-lg bg-red-500 text-white hover:bg-red-600 transition-colors"
+                        title="Hapus"
+                      >
+                        <Trash2 className="w-4 h-4" />
+                      </button>
+                    </div>
+                  </div>
+                ))
+              )}
+            </div>
+          </div>
         </div>
-
-        <div className="md:col-span-2 bg-white p-6 rounded-lg shadow border border-gray-100">
-          <h2 className="text-xl font-bold mb-4 text-gray-700">
-            My Submissions
-          </h2>
-
-          <table className="w-full text-left rounded-xl overflow-hidden">
-            <thead>
-              <tr className="bg-orange-50 text-gray-700">
-                <th className="p-3">Title</th>
-                <th className="p-3">Status</th>
-                <th className="p-3 text-center">Action</th>
-              </tr>
-            </thead>
-            <tbody>
-              {books.map((book) => (
-                <tr
-                  key={book.id}
-                  className="border-b border-gray-100 hover:bg-gray-50 transition"
-                >
-                  <td className="p-3 text-gray-600">{book.title}</td>
-                  <td className="p-3">
-                    <span
-                      className={`px-3 py-1 rounded-full text-xs font-bold
-                      ${
-                        book.status === "Published"
-                          ? "bg-green-100 text-green-700"
-                          : book.status === "Pending"
-                          ? "bg-yellow-100 text-yellow-700"
-                          : "bg-red-100 text-red-700"
-                      }`}
-                    >
-                      {book.status}
-                    </span>
-                  </td>
-                  <td className="p-3 text-center">
-                    {/* Requirement: Delete (x) button calling the action */}
-                    <button
-                      onClick={() => handleDelete(book.id)}
-                      className="text-red-500 hover:text-red-700 font-bold px-2"
-                    >
-                      (x)
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-          {books.length === 0 && (
-            <p className="text-center py-10 text-gray-400 italic">
-              Belum ada naskah yang diunggah.
-            </p>
-          )}
-        </div>
-      </div>
+      </main>
     </div>
-  );
+  )
 }
