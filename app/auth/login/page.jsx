@@ -36,7 +36,6 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen flex items-center justify-center p-4 bg-slate-50">
       <div className="w-full max-w-sm">
-        {/* Logo */}
         <div className="text-center mb-8">
           <Link href="/" className="inline-flex items-center gap-2">
             <div className="w-10 h-10 bg-slate-800 rounded-xl flex items-center justify-center">
@@ -47,7 +46,6 @@ export default function LoginPage() {
           <p className="mt-1 text-slate-500 text-sm">Masuk ke akun Cognifera Anda</p>
         </div>
 
-        {/* Form Card */}
         <div className="bg-white rounded-2xl shadow-xl shadow-slate-200/50 p-6 border border-slate-100">
           <form onSubmit={handleLogin} className="space-y-4">
             <div>
@@ -96,7 +94,6 @@ export default function LoginPage() {
             </button>
           </form>
 
-          {/* Demo Info */}
           <div className="mt-5 pt-5 border-t border-slate-100">
             <p className="text-center text-xs text-slate-400 mb-2">Demo credentials</p>
             <div className="flex gap-2 justify-center flex-wrap">
